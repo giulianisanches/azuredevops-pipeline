@@ -1,0 +1,27 @@
+trigger: none
+
+parameters:
+  - name: environment
+    displayName: environment
+    type: string
+    default: dev
+    values:
+      - dev
+      - qa
+      - prod
+      - pprod
+      
+variables:
+- group: release-qa
+
+resources:
+  repositories:
+  - repository: pipeline_tools
+    type: git
+    name: CodeBin/pipeline-tools
+      
+pool:
+  vmImage: ubuntu-latest
+
+extends:
+  template: pipeline_templates/base_template.yml@pipeline_tools
