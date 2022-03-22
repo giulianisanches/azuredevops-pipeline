@@ -29,4 +29,4 @@ steps:
   
   - task: Bash@3
     condition: succeeded()
-    displayName: Project Directory Structure and Git push to new repo
+    displayName: Second step
