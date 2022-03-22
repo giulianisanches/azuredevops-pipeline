@@ -1,27 +1,32 @@
 trigger: none
 
-parameters:
-  - name: environment
-    displayName: environment
-    type: string
-    default: dev
-    values:
-      - dev
-      - qa
-      - prod
-      - pprod
-      
-variables:
-- group: release-qa
+pr: none
 
-resources:
-  repositories:
-  - repository: pipeline_tools
-    type: git
-    name: CodeBin/pipeline-tools
-      
+parameters:
+  - name: goforward
+    displayName: Go forward
+    type: boolean
+    default: 'false'
+
+variables:
+  - group: release-qa
+
+# resources:
+#   repositories:
+#   - repository: pipeline_tools
+#     type: git
+#     name: CodeBin/pipeline-tools
+
 pool:
   vmImage: ubuntu-latest
 
-extends:
-  template: pipeline_templates/base_template.yml@pipeline_tools
+# extends:
+#   template: pipeline_templates/base_template.yml@pipeline_tools
+steps:
+  - task: Bash@3
+    condition: eq('${{ parameters.goforward }}', 'true')
+    displayName: First step
+  
+  - task: Bash@3
+    condition: succeeded()
+    displayName: Project Directory Structure and Git push to new repo
