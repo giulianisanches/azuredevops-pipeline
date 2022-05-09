@@ -2,11 +2,11 @@ trigger: none
 
 pr: none
 
-parameters:
-  - name: goforward
-    displayName: Go forward
-    type: boolean
-    default: false
+# parameters:
+#   - name: goforward
+#     displayName: Go forward
+#     type: boolean
+#     default: false
 
 variables:
   - group: release-qa
@@ -24,33 +24,15 @@ pool:
 #   template: pipeline_templates/base_template.yml@pipeline_tools
 steps:
   - task: Bash@3
-    condition: eq('${{ parameters.goforward }}', 'true')
-    displayName: Go forward
+    displayName: Test script
     inputs:
       targetType: 'inline'
       script: |
-        echo "##vso[task.setvariable variable=step1]true"
-  
-  - task: Bash@3
-    condition: eq('${{ parameters.goforward }}', 'false')
-    displayName: Don't go forward
-    inputs:
-      targetType: 'inline'
-      script: |
-        echo "##vso[task.setvariable variable=step2]true"
+        . azurelog.sh
+      
+        run "ls -lhtr"
 
-  - task: Bash@3
-    condition: eq(variables['step1'], 'true')
-    displayName: step1 check
-    inputs:
-      targetType: 'inline'
-      script: |
-        echo "ok"
-
-  - task: Bash@3
-    condition: succeeded()
-    displayName: Only if goforward is true
-    inputs:
-      targetType: 'inline'
-      script: |
-        echo "ok"
+        group "Meu grupo"
+        endgroup
+        
+        section "Minha section"
