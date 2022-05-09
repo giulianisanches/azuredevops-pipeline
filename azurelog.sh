@@ -1,5 +1,5 @@
 function run {
-    $command = $1
+    command=$1
     
     echo "##[command] $command"
     

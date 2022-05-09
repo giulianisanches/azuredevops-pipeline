@@ -33,6 +33,7 @@ steps:
         run "ls -lhtr"
 
         group "Meu grupo"
+        echo "HA!"
         endgroup
         
         section "Minha section"
